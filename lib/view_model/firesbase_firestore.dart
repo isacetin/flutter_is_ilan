@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_is_ilan/model/Kullanici.dart';
+import 'package:flutter_is_ilan/model/is_ilan.dart';
 
 class FirebaseFirestoreService extends ChangeNotifier {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -24,5 +25,19 @@ class FirebaseFirestoreService extends ChangeNotifier {
     return kullanici;
   }
 
-  IsKaydet() async{}
+  IsKaydet(String userID , IsIlan isIlan) async{
+    try{
+      await _firebaseFirestore.collection("isler").doc(userID).set({
+        "isAdi" : isIlan.isAdi,
+        "İdAdres" : isIlan.isAdres,
+        "isDetay" : isIlan.isDetay,
+        "isUcret" : isIlan.isUcret,
+        "isZaman" : isIlan.isZaman,
+      }).then((value) => {
+        print("İş Başarıyla Eklendi")
+      });
+    }catch(e){
+      print("İs Kayıt Ederken Hata $e");
+    }
+  }
 }

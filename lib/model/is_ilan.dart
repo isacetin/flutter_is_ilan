@@ -1,4 +1,4 @@
-class IsIlan{
+class IsIlan {
   String isAdi;
   String isDetay;
   String isUcret;
