@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
-import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +17,6 @@ class _CreateAccountState extends State<CreateAccount> {
   Widget build(BuildContext context) {
     var _authProvider =
         Provider.of<FirebaseAuthService>(context, listen: false);
-    var _cloudProvider =
-        Provider.of<FirebaseFirestoreService>(context, listen: false);
     return Scaffold(
         body: ListView(
       children: [

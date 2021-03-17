@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+
 class CustomCardWidget extends StatelessWidget {
-  Icon leading;
-  Text title;
+  final Icon leading;
+  final Text title;
   VoidCallback onpress = () {};
-
   CustomCardWidget({this.leading, this.title, this.onpress});
-
   @override
   Widget build(BuildContext context) {
     return Card(

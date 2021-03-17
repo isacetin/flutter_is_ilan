@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_is_ilan/model/Kullanici.dart';
-import 'package:flutter_is_ilan/model/is_ilan.dart';
+import 'package:flutter_is_ilan/model/ilan.dart';
 
 class FirebaseFirestoreService extends ChangeNotifier {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -25,14 +25,15 @@ class FirebaseFirestoreService extends ChangeNotifier {
     return kullanici;
   }
 
-  IsKaydet(String userID , IsIlan isIlan) async{
+  Future<void> IsKaydet(IsIlan isIlan) async{
     try{
-      await _firebaseFirestore.collection("isler").doc(userID).set({
+      await _firebaseFirestore.collection("isler").doc().set({
         "isAdi" : isIlan.isAdi,
         "İdAdres" : isIlan.isAdres,
         "isDetay" : isIlan.isDetay,
         "isUcret" : isIlan.isUcret,
         "isZaman" : isIlan.isZaman,
+        "yayilayanMail" : isIlan.yayilayanMail
       }).then((value) => {
         print("İş Başarıyla Eklendi")
       });
@@ -40,4 +41,5 @@ class FirebaseFirestoreService extends ChangeNotifier {
       print("İs Kayıt Ederken Hata $e");
     }
   }
+
 }

@@ -38,8 +38,7 @@ class FirebaseAuthService extends ChangeNotifier {
 
   Future<Kullanici> loginUserandPassword(String email, String password) async {
     try {
-      UserCredential girisYapanKullanici = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential girisYapanKullanici = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return kullaniciNesneOlustur(girisYapanKullanici.user);
     } catch (e) {
       print("loginUserandPassword Hata Oluştu : $e");
