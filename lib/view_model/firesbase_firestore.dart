@@ -29,7 +29,7 @@ class FirebaseFirestoreService extends ChangeNotifier {
     try{
       await _firebaseFirestore.collection("isler").doc().set({
         "isAdi" : isIlan.isAdi,
-        "İdAdres" : isIlan.isAdres,
+        "idAdres" : isIlan.isAdres,
         "isDetay" : isIlan.isDetay,
         "isUcret" : isIlan.isUcret,
         "isZaman" : isIlan.isZaman,

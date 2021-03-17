@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
+import 'package:flutter_is_ilan/widgets/ilan_card.dart';
 
 class Ilanlar extends StatefulWidget {
   @override
@@ -25,7 +26,12 @@ class _IlanlarState extends State<Ilanlar> {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context, index) {
                     DocumentSnapshot product = snapshot.data.docs[index];
-                    return Text(product["yayilayanMail"]);
+                    return IlanCard(
+                      isAdi: product['isAdi'],
+                      isDetay: product['isDetay'],
+                      isUcret: product['isUcret'],
+                    );
+
                   });
             }
           }),

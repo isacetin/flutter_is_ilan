@@ -10,8 +10,7 @@ class IlanEkleme extends StatefulWidget {
 }
 
 class _IlanEklemeState extends State<IlanEkleme> {
-  final snackBar = SnackBar(content: Text('Başarıyla Eklendi'),backgroundColor: Colors.green,);
-
+  final snackBar = SnackBar(content: Text('Başarıyla Eklendi'), backgroundColor: Colors.green);
   int aktifStep = 0;
   String isBilgi, adres, ucret;
   var formKey = GlobalKey<FormState>();
@@ -27,19 +26,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
           child: Stepper(
             controlsBuilder: (BuildContext context,
                 {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-              return Row(
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: sonStepMi ? null :  onStepContinue,
-                    child: const Text('Devam Et'),
-                  ),
-                  SizedBox(width: 30),
-                  TextButton(
-                    onPressed: onStepCancel,
-                    child: const Text('Geri Gel'),
-                  ),
-                ],
-              );
+              return devamGeriButtonRow(onStepContinue, onStepCancel);
             },
             steps: _tumStepler(formKey),
             currentStep: aktifStep,
@@ -47,9 +34,9 @@ class _IlanEklemeState extends State<IlanEkleme> {
               setState(() {
                 if (aktifStep < _tumStepler(formKey).length - 1) {
                   aktifStep++;
-                  if(aktifStep == 2){
+                  if (aktifStep == 2) {
                     sonStepMi = !sonStepMi;
-                  }else{
+                  } else {
                     sonStepMi = false;
                   }
                 }
@@ -59,9 +46,9 @@ class _IlanEklemeState extends State<IlanEkleme> {
               if (aktifStep > 0) {
                 setState(() {
                   aktifStep--;
-                  if(aktifStep == 2){
+                  if (aktifStep == 2) {
                     sonStepMi = !sonStepMi;
-                  }else{
+                  } else {
                     sonStepMi = false;
                   }
                 });
@@ -73,6 +60,23 @@ class _IlanEklemeState extends State<IlanEkleme> {
         ),
       ),
       floatingActionButton: buildFloatingActionButton(),
+    );
+  }
+
+  Row devamGeriButtonRow(
+      VoidCallback onStepContinue, VoidCallback onStepCancel) {
+    return Row(
+      children: <Widget>[
+        ElevatedButton(
+          onPressed: sonStepMi ? null : onStepContinue,
+          child: const Text('Devam Et'),
+        ),
+        SizedBox(width: 30),
+        TextButton(
+          onPressed: onStepCancel,
+          child: const Text('Geri Gel'),
+        ),
+      ],
     );
   }
 
@@ -90,14 +94,13 @@ class _IlanEklemeState extends State<IlanEkleme> {
                 isAdres: adres,
                 yayilayanMail: _autProvider.kullaniciTakip().email,
                 isZaman: "54'de");
-            FirebaseFirestoreService()
-                .IsKaydet(yeniIsIlan)
-                .then((value) {
+            FirebaseFirestoreService().IsKaydet(yeniIsIlan).then((value) {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             });
             setState(() {
               formKey.currentState.reset();
               aktifStep = 0;
+              sonStepMi = false;
             });
           }
         });
