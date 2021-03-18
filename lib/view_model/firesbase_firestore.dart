@@ -42,4 +42,9 @@ class FirebaseFirestoreService extends ChangeNotifier {
     }
   }
 
+  ilanGetir()async{
+    QuerySnapshot ilanlar = await FirebaseFirestore.instance.collection("isler").get();
+    return ilanlar;
+  }
+
 }

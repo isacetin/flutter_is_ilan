@@ -25,10 +25,9 @@ class MyApp extends StatelessWidget {
         theme: context.watch<AppController>().themeGet() == true
             ? ThemeData.dark()
             : ThemeData(
-                primarySwatch: Colors.deepOrange,
+                primarySwatch: Colors.blueGrey,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-        /*theme: */
         home: Yonlendirme());
   }
 }
