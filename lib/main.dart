@@ -13,11 +13,17 @@ void main() async {
     ChangeNotifierProvider<FirebaseAuthService>(
         create: (_) => FirebaseAuthService()),
     ChangeNotifierProvider<AppController>(create: (_) => AppController()),
-    ChangeNotifierProvider<FirebaseFirestoreService>(create: (_) => FirebaseFirestoreService()),
+    ChangeNotifierProvider<FirebaseFirestoreService>(
+        create: (_) => FirebaseFirestoreService()),
   ], child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

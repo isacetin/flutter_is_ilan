@@ -46,6 +46,10 @@ class FirebaseAuthService extends ChangeNotifier {
     }
   }
 
+  sifreSifirla() async{
+    await _firebaseAuth.sendPasswordResetEmail(email: kullaniciTakip().email);
+  }
+
   Future<void> cikisYap() async {
     var cikisYapanKullanici = await _firebaseAuth.signOut();
     return cikisYapanKullanici;
