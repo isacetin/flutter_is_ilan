@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomCardWidget extends StatelessWidget {
-  final Icon leading;
-  final Text title;
+   Icon leading;
+   Text title;
   VoidCallback onpress = () {};
   CustomCardWidget({this.leading, this.title, this.onpress});
   @override

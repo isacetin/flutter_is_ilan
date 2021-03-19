@@ -12,8 +12,8 @@ class FirebaseAuthService extends ChangeNotifier {
     return _firebaseAuth.currentUser;
   }
 
-  Future<Kullanici> kullaniciNesneOlustur(User user) async{
-    kullanici = await FirebaseFirestoreService().cloudKullaniciGetir(user.uid);
+  Future<Kullanici> kullaniciNesneOlustur(User user) async {
+    kullanici = await FirebaseFirestoreService().cloudKullaniciGetir();
     return kullanici;
   }
 
@@ -27,9 +27,9 @@ class FirebaseAuthService extends ChangeNotifier {
       UserCredential uyeOlankullanici = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       //FireStoreCloud Kullanıcı Ekleme
-      await FirebaseFirestoreService().cloudkullaniciOlustur(uyeOlankullanici.user);
+      await FirebaseFirestoreService()
+          .cloudkullaniciOlustur(uyeOlankullanici.user);
       return kullaniciNesneOlustur(uyeOlankullanici.user);
-
     } catch (e) {
       print("createUserEmailandPassword Hata Oluştu : $e");
       return null;
@@ -38,7 +38,8 @@ class FirebaseAuthService extends ChangeNotifier {
 
   Future<Kullanici> loginUserandPassword(String email, String password) async {
     try {
-      UserCredential girisYapanKullanici = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential girisYapanKullanici = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
       return kullaniciNesneOlustur(girisYapanKullanici.user);
     } catch (e) {
       print("loginUserandPassword Hata Oluştu : $e");
@@ -46,7 +47,7 @@ class FirebaseAuthService extends ChangeNotifier {
     }
   }
 
-  sifreSifirla() async{
+  sifreSifirla() async {
     await _firebaseAuth.sendPasswordResetEmail(email: kullaniciTakip().email);
   }
 

@@ -11,6 +11,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String onboardImage = 'assets/svg/welcome.svg';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Future<void> loadPictures() async {
+    await precachePicture(
+        ExactAssetPicture((SvgPicture.svgStringDecoder), onboardImage), null);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +50,6 @@ class _HomePageState extends State<HomePage> {
 
   void pageChange(int page) {
     widget.pageController.animateToPage(page,
-        duration: Duration(seconds: 1), curve: Curves.easeInOutQuad);
+        duration: Duration(seconds: 1), curve: Curves.easeIn);
   }
 }

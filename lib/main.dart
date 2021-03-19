@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
         theme: context.watch<AppController>().themeGet() == true
             ? ThemeData.dark()
             : ThemeData(
-                primarySwatch: Colors.blueGrey,
+                primarySwatch: Colors.green,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
         home: Yonlendirme());

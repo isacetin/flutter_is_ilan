@@ -17,6 +17,7 @@ class _AnasayfaState extends State<Anasayfa> {
     var pageController = PageController();
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: (index) {
           setState(() {
@@ -27,6 +28,7 @@ class _AnasayfaState extends State<Anasayfa> {
           Ilanlar(),
           IlanEkleme(),
           Profil(),
+          //SettingsProfile(),
         ],
       ),
       bottomNavigationBar: buildCurvedNavigationBar(context, pageController),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class Kullanici {
   String id;
   String kullaniciAd;
+  String kullaniciSoyad;
   String email;
   String profilUrl = " ";
 
@@ -10,12 +11,14 @@ class Kullanici {
       {@required this.id,
       @required this.email,
       this.kullaniciAd,
+      this.kullaniciSoyad,
       this.profilUrl});
 
   Map<String, dynamic> toMap() {
     return {
       "kullanıcıId": id,
       "kullanıcıAd": kullaniciAd,
+      "kullaniciSoyad": kullaniciSoyad,
       "e-mail": email,
       "profilUrl": profilUrl,
     };
@@ -24,6 +27,7 @@ class Kullanici {
   Kullanici.fromMap(Map<String, dynamic> map)
       : id = map["kullaniciID"],
         kullaniciAd = map["kullaniciAd"],
+        kullaniciSoyad = map["kullaniciSoyad"],
         email = map["e-mail"],
         profilUrl = map["fotoUrl"];
 
