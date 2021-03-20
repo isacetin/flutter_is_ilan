@@ -34,6 +34,11 @@ class _IlanEklemeState extends State<IlanEkleme> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text("İLAN EKLE"),
+      ),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -106,7 +111,13 @@ class _IlanEklemeState extends State<IlanEkleme> {
         onPressed: () {
           if (formKey.currentState.validate()) {
             formKey.currentState.save();
-            IsIlan yeniIsIlan = IsIlan(isAdi: secilenKategori, isDetay: isBilgi, isUcret: ucret, isAdres: adres, yayilayanMail: _autProvider.kullaniciTakip().email, isZaman: secilenTarih);
+            IsIlan yeniIsIlan = IsIlan(
+                isAdi: secilenKategori,
+                isDetay: isBilgi,
+                isUcret: ucret,
+                isAdres: adres,
+                yayilayanMail: _autProvider.kullaniciTakip().email,
+                isZaman: secilenTarih);
             FirebaseFirestoreService().IsKaydet(yeniIsIlan).then((value) {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             });
@@ -128,7 +139,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
         isActive: true,
         content: DropdownButton<String>(
           isExpanded: true,
-
           hint: Text(secilenKategori),
           items: dropItems,
           onChanged: (secilen) {

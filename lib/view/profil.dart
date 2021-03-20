@@ -56,10 +56,7 @@ class _ProfilState extends State<Profil> {
     var _authProvider = Provider.of<FirebaseAuthService>(context, listen: true);
     var _appProvider = Provider.of<AppController>(context, listen: false);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40),
-        child: buildAppBar(),
-      ),
+      appBar: buildAppBar(),
       body: FutureBuilder<Kullanici>(
         future: FirebaseFirestoreService().cloudKullaniciGetir(),
         builder: (context, snapshot) {
@@ -88,7 +85,6 @@ class _ProfilState extends State<Profil> {
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: profilFoto(snapshot, _image),
-                              //NetworkImage(snapshot.data.profilUrl),
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -219,7 +215,7 @@ class _ProfilState extends State<Profil> {
 
   AppBar buildAppBar() {
     return AppBar(
-      title: Text("Profil"),
+      title: Text("PROFİL"),
       elevation: 0,
       centerTitle: true,
     );
@@ -245,7 +241,12 @@ class _ProfilState extends State<Profil> {
         return FileImage(_image);
       }
     } else {
-      return NetworkImage(snapshot.data.profilUrl);
+      if (_image == null) {
+        return NetworkImage(snapshot.data.profilUrl);
+      } else {
+        return FileImage(_image);
+      }
+
     }
   }
 
