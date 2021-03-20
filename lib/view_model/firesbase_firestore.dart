@@ -32,13 +32,14 @@ class FirebaseFirestoreService extends ChangeNotifier {
   }
 
   Future<void> cloudKullaniciGuncelle(
-      String kullaniciAd, String kullaniciSoyad) async {
+      String kullaniciAd, String kullaniciSoyad,String profilFotoUrl) async {
     await _firebaseFirestore
         .collection("kullanicilar")
         .doc(FirebaseAuthService().kullaniciTakip().uid)
         .update({
       "kullaniciAd": kullaniciAd,
       "kullaniciSoyad": kullaniciSoyad,
+      "fotoUrl": profilFotoUrl,
     });
   }
 

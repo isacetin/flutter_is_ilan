@@ -1,10 +1,13 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/model/Kullanici.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/app_controller.dart';
+import 'package:flutter_is_ilan/view_model/firebase_storage.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_is_ilan/widgets/card_widget.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,9 +17,11 @@ class Profil extends StatefulWidget {
 }
 
 class _ProfilState extends State<Profil> {
+  File _image;
+  final picker = ImagePicker();
   FocusNode myFocusNode;
   FocusNode myFocusNode2;
-  String kullaniciAd, kullaniciSoyad;
+  String kullaniciAd, kullaniciSoyad, kullaniciFotoUrl;
   var _formKey = GlobalKey<FormState>();
   bool darkMi = false;
   var snackBar = SnackBar(
@@ -27,7 +32,7 @@ class _ProfilState extends State<Profil> {
   );
   var snackBar2 = SnackBar(
       content: Text(
-        'Adınız ve Soyadınız Güncellenmiştir.',
+        'Kullanıcı Bilgileriniz Güncellenmiştir.',
         style: TextStyle(color: Colors.black),
       ),
       backgroundColor: Colors.green);
@@ -38,6 +43,7 @@ class _ProfilState extends State<Profil> {
     myFocusNode = FocusNode();
     myFocusNode2 = FocusNode();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -81,7 +87,8 @@ class _ProfilState extends State<Profil> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage("assets/images/profil.png"),
+                              image: profilFoto(snapshot, _image),
+                              //NetworkImage(snapshot.data.profilUrl),
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -95,8 +102,8 @@ class _ProfilState extends State<Profil> {
                         bottom: 0,
                         right: 0,
                         child: Container(
-                          height: 40,
-                          width: 40,
+                          height: 50,
+                          width: 50,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -105,9 +112,10 @@ class _ProfilState extends State<Profil> {
                             ),
                             color: Colors.green,
                           ),
-                          child: Icon(
-                            Icons.edit,
+                          child: IconButton(
+                            icon: Icon(Icons.edit),
                             color: Colors.white,
+                            onPressed: getImage,
                           ),
                         ),
                       ),
@@ -154,10 +162,12 @@ class _ProfilState extends State<Profil> {
                         "KAYDET",
                         style: TextStyle(letterSpacing: 2, fontSize: 14),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         _formKey.currentState.save();
+                        kullaniciFotoUrl = await FirebaseStogareService()
+                            .profilResmiYukle(_image);
                         FirebaseFirestoreService().cloudKullaniciGuncelle(
-                            kullaniciAd, kullaniciSoyad);
+                            kullaniciAd, kullaniciSoyad, kullaniciFotoUrl);
                         myFocusNode.unfocus();
                         myFocusNode2.unfocus();
                         ScaffoldMessenger.of(context).showSnackBar(snackBar2);
@@ -215,6 +225,30 @@ class _ProfilState extends State<Profil> {
     );
   }
 
+  Future getImage() async {
+    var image = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (image != null) {
+        _image = File(image.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  profilFoto(AsyncSnapshot<Kullanici> snapshot, File image) {
+    if (snapshot.data.profilUrl == null) {
+      if (_image == null) {
+        return AssetImage("assets/images/profil.png");
+      } else {
+        return FileImage(_image);
+      }
+    } else {
+      return NetworkImage(snapshot.data.profilUrl);
+    }
+  }
+
   _showDialog() {
     showAboutDialog(
         context: context,
@@ -264,29 +298,30 @@ class _ProfilState extends State<Profil> {
 
   _resetPassword() async {
     showDialog(
-        context: context,
-        builder: (_) => new AlertDialog(
-              title: new Text("Şifremi Değiştir!"),
-              content: new Text(
-                  "Şifre sıfırlama linki mail adresinize gönderilecektir."),
-              actions: <Widget>[
-                TextButton.icon(
-                  icon: Icon(Icons.save),
-                  label: Text('ONAYLA'),
-                  onPressed: () {
-                    context.read<FirebaseAuthService>().sifreSifirla();
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
-                ),
-                TextButton.icon(
-                  icon: Icon(Icons.clear),
-                  label: Text('İPTAL!'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ));
+      context: context,
+      builder: (_) => new AlertDialog(
+        title: new Text("Şifremi Değiştir!"),
+        content:
+            new Text("Şifre sıfırlama linki mail adresinize gönderilecektir."),
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(Icons.save),
+            label: Text('ONAYLA'),
+            onPressed: () {
+              context.read<FirebaseAuthService>().sifreSifirla();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+          ),
+          TextButton.icon(
+            icon: Icon(Icons.clear),
+            label: Text('İPTAL!'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

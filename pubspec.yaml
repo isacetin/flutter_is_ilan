@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  firebase_storage: ^8.0.0
+  image_picker: ^0.7.3
   flutter_svg: ^0.19.3
   url_launcher: ^6.0.2
   flutter_multi_formatter: ^2.0.0
