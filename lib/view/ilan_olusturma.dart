@@ -4,7 +4,9 @@ import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IlanEkleme extends StatefulWidget {
   @override
@@ -30,6 +32,9 @@ class _IlanEklemeState extends State<IlanEkleme> {
   DateTime suankiTarih = DateTime.now();
   DateTime sonTarih = DateTime(2023, 1, 1);
   String secilenTarih = " ";
+  double enlem = 0;
+  double boylam = 0;
+  bool autoKonum = true;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text("İLAN EKLE"),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -255,4 +259,5 @@ class _IlanEklemeState extends State<IlanEkleme> {
       return StepState.indexed;
     }
   }
+
 }

@@ -23,20 +23,21 @@ class IlanCard extends StatelessWidget {
     return Card(
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2.3,
+        height: MediaQuery.of(context).size.height / 3,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Image.asset(
-              "assets/images/kategoriler/$isAdi.jpg",
-              fit: BoxFit.fill,
+            Expanded(
+              child: Image.asset(
+                "assets/images/kategoriler/$isAdi.jpg",
+              ),
             ),
             ListTile(
               leading: CircleAvatar(
                 backgroundImage: AssetImage("assets/images/profil.png"),
               ),
               title: Text(isAdi),
-              subtitle: Text(isDetay),
+              subtitle: Text(isDetay,overflow: TextOverflow.ellipsis,),
               trailing: Text(isUcret),
             ),
             //Flexible(flex: 1, child: Placeholder()),

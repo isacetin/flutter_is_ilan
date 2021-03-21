@@ -21,43 +21,51 @@ class _IlanlarState extends State<Ilanlar> {
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          title: Text("İLANLAR"),
+          title: Text("İLANLAR",style: TextStyle(fontFamily: 'Roboto'),),
         ),
-        body: FutureBuilder(
-            future: FirebaseFirestoreService().ilanGetir(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return ListView.builder(
-                    itemCount: snapshot.data.docs.length,
-                    itemBuilder: (context, index) {
-                      DocumentSnapshot product = snapshot.data.docs[index];
-                      return InkWell(
-                        child: Hero(
-                          tag: index,
-                          child: IlanCard(
-                            isAdi: product['isAdi'],
-                            isDetay: product['isDetay'],
-                            isUcret: product['isUcret'],
+        body: RefreshIndicator(
+          onRefresh: _sayfaYenile,
+          child: FutureBuilder(
+              future: FirebaseFirestoreService().ilanGetir(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return ListView.builder(
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot product = snapshot.data.docs[index];
+                        return InkWell(
+                          child: Hero(
+                            tag: index,
+                            child: IlanCard(
+                              isAdi: product['isAdi'],
+                              isDetay: product['isDetay'],
+                              isUcret: product['isUcret'],
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => IlanDetay(
-                                        index: index.toString(),
-                                        product: product,
-                                      )));
-                        },
-                      );
-                    });
-              }
-            }),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => IlanDetay(
+                                          index: index.toString(),
+                                          product: product,
+                                        )));
+                          },
+                        );
+                      });
+                }
+              }),
+        ),
       ),
     );
+  }
+
+  Future<Null> _sayfaYenile() async {
+    setState(() {});
+    return null;
   }
 }
