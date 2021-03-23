@@ -21,7 +21,10 @@ class _IlanlarState extends State<Ilanlar> {
         appBar: AppBar(
           elevation: 0,
           centerTitle: true,
-          title: Text("İLANLAR",style: TextStyle(fontFamily: 'Roboto'),),
+          title: Text(
+            "İLANLAR",
+            style: TextStyle(fontFamily: 'Roboto'),
+          ),
         ),
         body: RefreshIndicator(
           onRefresh: _sayfaYenile,
@@ -34,6 +37,7 @@ class _IlanlarState extends State<Ilanlar> {
                   );
                 } else {
                   return ListView.builder(
+                      physics: ClampingScrollPhysics(),
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
                         DocumentSnapshot product = snapshot.data.docs[index];

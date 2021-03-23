@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   final PageController pageController;
@@ -29,19 +30,23 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SvgPicture.asset("assets/svg/welcome.svg"),
-            ElevatedButton(
-                child: Text("HESAP OLUŞTUR"),
-                onPressed: () {
-                  pageChange(2);
-                }),
-            ElevatedButton(
-                child: Text("GİRİŞ YAP"),
-                onPressed: () {
-                  pageChange(0);
-                })
+            Lottie.asset("assets/lottie/work.json", height: 250),
+            Column(
+              children: [
+                ElevatedButton(
+                    child: Text("HESAP OLUŞTUR"),
+                    onPressed: () {
+                      pageChange(2);
+                    }),
+                ElevatedButton(
+                    child: Text("GİRİŞ YAP"),
+                    onPressed: () {
+                      pageChange(0);
+                    })
+              ],
+            ),
           ],
         ),
       ),

@@ -4,9 +4,7 @@ import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class IlanEkleme extends StatefulWidget {
   @override

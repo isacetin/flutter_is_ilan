@@ -13,8 +13,6 @@ void main() async {
     ChangeNotifierProvider<FirebaseAuthService>(
         create: (_) => FirebaseAuthService()),
     ChangeNotifierProvider<AppController>(create: (_) => AppController()),
-    ChangeNotifierProvider<FirebaseFirestoreService>(
-        create: (_) => FirebaseFirestoreService()),
   ], child: MyApp()));
 }
 
