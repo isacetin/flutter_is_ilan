@@ -12,6 +12,7 @@ class Ilanlar extends StatefulWidget {
 
 class _IlanlarState extends State<Ilanlar> {
   String secilenKategori = "Tümü";
+  int seciliIndex = 0;
   List<String> kategoriler = [
     "Tümü",
     "Bakıcılık",
@@ -20,7 +21,7 @@ class _IlanlarState extends State<Ilanlar> {
     "Kasiyer",
     "Montaj",
     "Temizlik",
-    "Diğer"
+    "Diger"
   ];
 
   @override
@@ -51,48 +52,8 @@ class _IlanlarState extends State<Ilanlar> {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: kategoriler.length,
-                          itemBuilder: (context, index) {
-                            return kategoriChip(kategoriler[index]);
-                          }),
-                    ),
-                    Expanded(
-                      flex: 9,
-                      child: ListView.builder(
-                        physics: ClampingScrollPhysics(),
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (context, index) {
-                          DocumentSnapshot product = snapshot.data.docs[index];
-                          return InkWell(
-                            child: Hero(
-                              tag: index,
-                              child: IlanCard(
-                                isAdi: product['isAdi'],
-                                isDetay: product['isDetay'],
-                                isUcret: product['isUcret'],
-                                yayinlayanFotoUrl: product['yayinlayanFtoUrl'],
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => IlanDetay(
-                                    index: index.toString(),
-                                    product: product,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    buildKategoriler(),
+                    buildIlanCardlar(snapshot),
                   ],
                 );
               }
@@ -103,23 +64,75 @@ class _IlanlarState extends State<Ilanlar> {
     );
   }
 
+  Expanded buildKategoriler() {
+    return Expanded(
+      flex: 1,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: kategoriler.length,
+          itemBuilder: (context, index) {
+            return kategoriChip(kategoriler[index], index);
+          }),
+    );
+  }
+
+  Expanded buildIlanCardlar(AsyncSnapshot snapshot) {
+    return Expanded(
+      flex: 9,
+      child: ListView.builder(
+        physics: ClampingScrollPhysics(),
+        itemCount: snapshot.data.docs.length,
+        itemBuilder: (context, index) {
+          DocumentSnapshot product = snapshot.data.docs[index];
+          return InkWell(
+            child: Hero(
+              tag: index,
+              child: IlanCard(
+                isAdi: product['isAdi'],
+                isDetay: product['isDetay'],
+                isUcret: product['isUcret'],
+                yayinlayanFotoUrl: product['yayinlayanFtoUrl'],
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => IlanDetay(
+                    index: index.toString(),
+                    product: product,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+
   Future<Null> _sayfaYenile() async {
     setState(() {});
     return null;
   }
 
-  Widget kategoriChip(String label) {
+  Widget kategoriChip(String label, int index) {
     return InkWell(
       onTap: () {
         setState(() {
+          seciliIndex = index;
           secilenKategori = label;
         });
       },
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 5),
         child: Chip(
-          label: Text(label),
-          backgroundColor: Colors.green,
+          label: Text(
+            label,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: seciliIndex == index ? Colors.green : Colors.grey,
         ),
       ),
     );
