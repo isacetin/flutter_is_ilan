@@ -1,10 +1,8 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/model/ilan.dart';
-import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
-import 'package:provider/provider.dart';
 
 import '../model/Kullanici.dart';
 import '../view_model/firesbase_firestore.dart';
@@ -118,7 +116,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
   }
 
   FloatingActionButton buildFloatingActionButton() {
-    var _autProvider = Provider.of<FirebaseAuthService>(context);
     return FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {

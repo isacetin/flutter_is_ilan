@@ -56,37 +56,45 @@ class IlanCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
+                Row(
                   children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundColor: Colors.white,
-                      backgroundImage: yayinlayanFotoUrl == null
-                          ? AssetImage("assets/images/profil.png")
-                          : NetworkImage(yayinlayanFotoUrl),
+                    Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.white,
+                          backgroundImage: yayinlayanFotoUrl == null
+                              ? AssetImage("assets/images/profil.png")
+                              : NetworkImage(yayinlayanFotoUrl),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      isAdi,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    Text(
-                      isDetay,
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey),
-                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          isAdi,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                        Text(
+                          isDetay,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                        ),
+                      ],
+                    )
                   ],
                 ),
                 Chip(
-                    label: Text(
-                  isUcret,
-                )),
+                  backgroundColor: Color(0xFF9EDE73),
+                  label: Text(
+                    isUcret,
+                  ),
+                ),
               ],
             ),
           )

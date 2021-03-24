@@ -45,6 +45,7 @@ class FirebaseFirestoreService extends ChangeNotifier {
     });
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> IsKaydet(IsIlan isIlan) async {
     try {
       return await _firebaseFirestore.collection("isler").doc().set({

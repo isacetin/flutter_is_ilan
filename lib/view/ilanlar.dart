@@ -33,11 +33,16 @@ class _IlanlarState extends State<Ilanlar> {
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          centerTitle: true,
           title: Text(
             "İLANLAR",
             style: TextStyle(fontFamily: 'Roboto'),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Icon(Icons.search),
+            )
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: _sayfaYenile,

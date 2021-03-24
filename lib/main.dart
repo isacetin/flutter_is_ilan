@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/view/yonlendirme.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/app_controller.dart';
-import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
