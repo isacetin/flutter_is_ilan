@@ -36,6 +36,7 @@ class IlanCard extends StatelessWidget {
             ),
             ListTile(
               leading: CircleAvatar(
+                backgroundColor: Colors.white,
                 backgroundImage: yayinlayanFotoUrl == null
                     ? AssetImage("assets/images/profil.png")
                     : NetworkImage(yayinlayanFotoUrl),

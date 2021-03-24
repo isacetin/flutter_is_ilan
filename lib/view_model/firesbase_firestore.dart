@@ -62,9 +62,16 @@ class FirebaseFirestoreService extends ChangeNotifier {
     }
   }
 
-  ilanGetir() async {
-    QuerySnapshot ilanlar =
-        await FirebaseFirestore.instance.collection("isler").get();
+  ilanGetir(String kategori) async {
+    QuerySnapshot ilanlar;
+    if (kategori == "Tümü") {
+      ilanlar = await FirebaseFirestore.instance.collection("isler").get();
+    } else {
+      ilanlar = await FirebaseFirestore.instance
+          .collection("isler")
+          .where('isAdi', isEqualTo: kategori)
+          .get();
+    }
     return ilanlar;
   }
 }

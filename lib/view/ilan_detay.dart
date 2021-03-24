@@ -43,7 +43,11 @@ class IlanDetay extends StatelessWidget {
               Divider(),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.person, color: Colors.blueAccent),
+                  leading: CircleAvatar(
+                    backgroundImage: product['yayinlayanFtoUrl'] != null
+                        ? NetworkImage(product['yayinlayanFtoUrl'])
+                        : AssetImage("assets/images/profil.png"),
+                  ),
                   title: Text(product['yayilayanMail']),
                   subtitle: Text(product['isAdi']),
                   trailing: IconButton(
