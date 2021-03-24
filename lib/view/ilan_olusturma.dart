@@ -6,12 +6,16 @@ import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
 import 'package:provider/provider.dart';
 
+import '../model/Kullanici.dart';
+import '../view_model/firesbase_firestore.dart';
+
 class IlanEkleme extends StatefulWidget {
   @override
   _IlanEklemeState createState() => _IlanEklemeState();
 }
 
 class _IlanEklemeState extends State<IlanEkleme> {
+  Kullanici yayinlayanKullanici;
   final snackBar = SnackBar(
       content: Text('Başarıyla Eklendi'), backgroundColor: Colors.green);
   List<DropdownMenuItem<String>> dropItems = [
@@ -33,6 +37,13 @@ class _IlanEklemeState extends State<IlanEkleme> {
   double enlem = 0;
   double boylam = 0;
   bool autoKonum = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    kullaniciGetir();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +124,15 @@ class _IlanEklemeState extends State<IlanEkleme> {
         onPressed: () {
           if (formKey.currentState.validate()) {
             formKey.currentState.save();
+            FocusScope.of(context).requestFocus(new FocusNode());
+            formKey.currentState.reset();
             IsIlan yeniIsIlan = IsIlan(
                 isAdi: secilenKategori,
                 isDetay: isBilgi,
                 isUcret: ucret,
                 isAdres: adres,
-                yayilayanMail: _autProvider.kullaniciTakip().email,
+                yayilayanMail: yayinlayanKullanici.email,
+                yayinlayanFotoUrl: yayinlayanKullanici.profilUrl,
                 isZaman: secilenTarih);
             FirebaseFirestoreService().IsKaydet(yeniIsIlan).then((value) {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -258,4 +272,8 @@ class _IlanEklemeState extends State<IlanEkleme> {
     }
   }
 
+  kullaniciGetir() async {
+    yayinlayanKullanici =
+        await FirebaseFirestoreService().cloudKullaniciGetir();
+  }
 }

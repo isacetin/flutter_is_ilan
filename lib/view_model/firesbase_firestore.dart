@@ -5,6 +5,8 @@ import 'package:flutter_is_ilan/model/Kullanici.dart';
 import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 
+import '../model/ilan.dart';
+
 class FirebaseFirestoreService extends ChangeNotifier {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
@@ -32,7 +34,7 @@ class FirebaseFirestoreService extends ChangeNotifier {
   }
 
   Future<void> cloudKullaniciGuncelle(
-      String kullaniciAd, String kullaniciSoyad,String profilFotoUrl) async {
+      String kullaniciAd, String kullaniciSoyad, String profilFotoUrl) async {
     await _firebaseFirestore
         .collection("kullanicilar")
         .doc(FirebaseAuthService().kullaniciTakip().uid)
@@ -43,19 +45,20 @@ class FirebaseFirestoreService extends ChangeNotifier {
     });
   }
 
-  // ignore: non_constant_identifier_names
   Future<void> IsKaydet(IsIlan isIlan) async {
     try {
-      await _firebaseFirestore.collection("isler").doc().set({
+      return await _firebaseFirestore.collection("isler").doc().set({
         "isAdi": isIlan.isAdi,
         "isAdres": isIlan.isAdres,
         "isDetay": isIlan.isDetay,
         "isUcret": isIlan.isUcret,
         "isZaman": isIlan.isZaman,
-        "yayilayanMail": isIlan.yayilayanMail
+        "yayilayanMail": isIlan.yayilayanMail,
+        "yayinlayanFtoUrl": isIlan.yayinlayanFotoUrl
       }).then((value) => {print("İş Başarıyla Eklendi")});
     } catch (e) {
       print("İs Kayıt Ederken Hata $e");
+      return null;
     }
   }
 

@@ -5,6 +5,7 @@ class IsIlan {
   String isZaman;
   String isAdres;
   String yayilayanMail;
+  String yayinlayanFotoUrl;
 
   IsIlan(
       {this.isAdi,
@@ -12,6 +13,7 @@ class IsIlan {
       this.isUcret,
       this.isZaman,
       this.isAdres,
+      this.yayinlayanFotoUrl,
       this.yayilayanMail});
 
   IsIlan.fromMap(Map<String, dynamic> map)
@@ -20,5 +22,6 @@ class IsIlan {
         isUcret = map["isUcret"],
         isZaman = map["isZaman"],
         isAdres = map["isAdres"],
+        yayinlayanFotoUrl = map["yayinlayanFotoUrl"],
         yayilayanMail = map["yayilayanMail"];
 }

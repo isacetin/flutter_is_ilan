@@ -6,6 +6,7 @@ class IlanCard extends StatelessWidget {
   final String isUcret;
   final String isZaman;
   final String yayinlayanMail;
+  final String yayinlayanFotoUrl;
   final String isAdres;
 
   const IlanCard(
@@ -15,7 +16,8 @@ class IlanCard extends StatelessWidget {
       this.isUcret,
       this.isZaman,
       this.yayinlayanMail,
-      this.isAdres})
+      this.isAdres,
+      this.yayinlayanFotoUrl})
       : super(key: key);
 
   @override
@@ -34,10 +36,15 @@ class IlanCard extends StatelessWidget {
             ),
             ListTile(
               leading: CircleAvatar(
-                backgroundImage: AssetImage("assets/images/profil.png"),
+                backgroundImage: yayinlayanFotoUrl == null
+                    ? AssetImage("assets/images/profil.png")
+                    : NetworkImage(yayinlayanFotoUrl),
               ),
               title: Text(isAdi),
-              subtitle: Text(isDetay,overflow: TextOverflow.ellipsis,),
+              subtitle: Text(
+                isDetay,
+                overflow: TextOverflow.ellipsis,
+              ),
               trailing: Text(isUcret),
             ),
             //Flexible(flex: 1, child: Placeholder()),

@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../view_model/FirebaseAuth.dart';
+
 class Profil extends StatefulWidget {
   @override
   _ProfilState createState() => _ProfilState();
