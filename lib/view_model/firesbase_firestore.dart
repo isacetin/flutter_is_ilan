@@ -23,7 +23,9 @@ class FirebaseFirestoreService extends ChangeNotifier {
   Future<Kullanici> cloudKullaniciGetir() async {
     DocumentSnapshot doc = await _firebaseFirestore
         .collection("kullanicilar")
-        .doc(FirebaseAuthService().kullaniciTakip().uid)
+        .doc(FirebaseAuthService()
+        .kullaniciTakip()
+        .uid)
         .get();
     Kullanici kullanici;
     if (doc.exists) {
@@ -33,11 +35,13 @@ class FirebaseFirestoreService extends ChangeNotifier {
     return kullanici;
   }
 
-  Future<void> cloudKullaniciGuncelle(
-      String kullaniciAd, String kullaniciSoyad, String profilFotoUrl) async {
+  Future<void> cloudKullaniciGuncelle(String kullaniciAd, String kullaniciSoyad,
+      String profilFotoUrl) async {
     await _firebaseFirestore
         .collection("kullanicilar")
-        .doc(FirebaseAuthService().kullaniciTakip().uid)
+        .doc(FirebaseAuthService()
+        .kullaniciTakip()
+        .uid)
         .update({
       "kullaniciAd": kullaniciAd,
       "kullaniciSoyad": kullaniciSoyad,
@@ -66,13 +70,29 @@ class FirebaseFirestoreService extends ChangeNotifier {
   ilanGetir(String kategori) async {
     QuerySnapshot ilanlar;
     if (kategori == "Tümü") {
-      ilanlar = await FirebaseFirestore.instance.collection("isler").get();
+      ilanlar = await _firebaseFirestore.collection("isler").get();
     } else {
-      ilanlar = await FirebaseFirestore.instance
+      ilanlar = await _firebaseFirestore
           .collection("isler")
           .where('isAdi', isEqualTo: kategori)
           .get();
     }
     return ilanlar;
+  }
+
+  profilSahibiIlanGetir() async {
+    try {
+      QuerySnapshot ilanlar = await _firebaseFirestore.collection("isler").where(
+          'yayilayanMail', isEqualTo: FirebaseAuthService()
+          .kullaniciTakip()
+          .email).get();
+      return ilanlar;
+    } catch (e) {
+      print("Hata : " + e.toString());
+    }
+  }
+
+  ilanSil(String docId) async{
+    await _firebaseFirestore.collection("isler").doc(docId).delete();
   }
 }

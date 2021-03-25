@@ -7,14 +7,13 @@ class IsIlan {
   String yayilayanMail;
   String yayinlayanFotoUrl;
 
-  IsIlan(
-      {this.isAdi,
-      this.isDetay,
-      this.isUcret,
-      this.isZaman,
-      this.isAdres,
-      this.yayinlayanFotoUrl,
-      this.yayilayanMail});
+  IsIlan({this.isAdi,
+    this.isDetay,
+    this.isUcret,
+    this.isZaman,
+    this.isAdres,
+    this.yayinlayanFotoUrl,
+    this.yayilayanMail});
 
   IsIlan.fromMap(Map<String, dynamic> map)
       : isAdi = map["isAdi"],

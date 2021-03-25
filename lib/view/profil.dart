@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/model/Kullanici.dart';
+import 'package:flutter_is_ilan/view/profil_sahibi_ilanlar.dart';
 import 'package:flutter_is_ilan/view_model/FirebaseAuth.dart';
 import 'package:flutter_is_ilan/view_model/app_controller.dart';
 import 'package:flutter_is_ilan/view_model/firebase_storage.dart';
@@ -18,7 +19,7 @@ class Profil extends StatefulWidget {
   _ProfilState createState() => _ProfilState();
 }
 
-class _ProfilState extends State<Profil> {
+class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
   File _image;
   final picker = ImagePicker();
   FocusNode myFocusNode;
@@ -39,8 +40,11 @@ class _ProfilState extends State<Profil> {
       ),
       backgroundColor: Colors.green);
 
+  TabController _tabController;
+
   @override
   void initState() {
+    _tabController = TabController(length: 2, vsync: this);
     super.initState();
     myFocusNode = FocusNode();
     myFocusNode2 = FocusNode();
@@ -48,6 +52,7 @@ class _ProfilState extends State<Profil> {
 
   @override
   void dispose() {
+    _tabController.dispose();
     super.dispose();
     myFocusNode.dispose();
     myFocusNode2.dispose();
@@ -55,171 +60,201 @@ class _ProfilState extends State<Profil> {
 
   @override
   Widget build(BuildContext context) {
-    var _authProvider = Provider.of<FirebaseAuthService>(context, listen: true);
-    var _appProvider = Provider.of<AppController>(context, listen: false);
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: FutureBuilder<Kullanici>(
-        future: FirebaseFirestoreService().cloudKullaniciGetir(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                SizedBox(height: 15),
-                Center(
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 4,
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor),
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: profilFoto(snapshot, _image),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 10,
-                                  color: Colors.black.withOpacity(0.1),
-                                  offset: Offset(0, 10))
-                            ]),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            color: Colors.green,
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            color: Colors.white,
-                            onPressed: getImage,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 35),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        focusNode: myFocusNode,
-                        autofocus: false,
-                        initialValue: snapshot.data.kullaniciAd,
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 3),
-                          labelText: "İsim",
-                        ),
-                        onSaved: (girilenAd) {
-                          kullaniciAd = girilenAd;
-                        },
-                      ),
-                      SizedBox(height: 15),
-                      TextFormField(
-                        focusNode: myFocusNode2,
-                        autofocus: false,
-                        initialValue: snapshot.data.kullaniciSoyad,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(bottom: 3),
-                            labelText: "Soyisim"),
-                        onSaved: (girilenAd) {
-                          kullaniciSoyad = girilenAd;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      child: Text(
-                        "KAYDET",
-                        style: TextStyle(letterSpacing: 2, fontSize: 14),
-                      ),
-                      onPressed: () async {
-                        _formKey.currentState.save();
-                        kullaniciFotoUrl = await FirebaseStogareService()
-                            .profilResmiYukle(_image);
-                        FirebaseFirestoreService().cloudKullaniciGuncelle(
-                            kullaniciAd, kullaniciSoyad, kullaniciFotoUrl);
-                        myFocusNode.unfocus();
-                        myFocusNode2.unfocus();
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar2);
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 25),
-                CustomCardWidget(
-                  leading: Icon(
-                    Icons.lock_open_outlined,
-                  ),
-                  title: Text("Şifremi Değiştir"),
-                  onpress: () => _resetPassword(),
-                ),
-                CustomCardWidget(
-                  leading: Icon(
-                    Icons.help_center_outlined,
-                  ),
-                  title: Text("Yardım"),
-                  onpress: () => _showDialog(),
-                ),
-                Card(
-                    child: SwitchListTile(
-                        title: Text("Karanlık Mod"),
-                        secondary: Icon(Icons.brightness_2),
-                        value: _appProvider.themeGet(),
-                        onChanged: (value) {
-                          setState(() {
-                            _appProvider.themeChange();
-                          });
-                        })),
-                CustomCardWidget(
-                  leading: Icon(
-                    Icons.exit_to_app_outlined,
-                  ),
-                  title: Text("Çıkış Yap"),
-                  onpress: () {
-                    _authProvider.cikisYap();
-                  },
-                ),
-              ],
-            ),
-          );
-        },
+    return DefaultTabController(
+      length: 2,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: buildAppBar(),
+        body: TabBarView(
+          children: [
+            profilTab(),
+            ProfilSahibiIlanlar(),
+          ],
+          controller: _tabController,
+        ),
       ),
     );
   }
 
-  AppBar buildAppBar() {
-    return AppBar(
-      title: Text("PROFİL"),
-      elevation: 0,
-      centerTitle: true,
+  Widget profilTab() {
+    var _authProvider = Provider.of<FirebaseAuthService>(context, listen: true);
+    var _appProvider = Provider.of<AppController>(context, listen: false);
+    return FutureBuilder<Kullanici>(
+      future: FirebaseFirestoreService().cloudKullaniciGetir(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              SizedBox(height: 15),
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: profilFoto(snapshot, _image),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ]),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                          color: Colors.green,
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.edit),
+                          color: Colors.white,
+                          onPressed: getImage,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 35),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      focusNode: myFocusNode,
+                      autofocus: false,
+                      initialValue: snapshot.data.kullaniciAd,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                        labelText: "İsim",
+                      ),
+                      onSaved: (girilenAd) {
+                        kullaniciAd = girilenAd;
+                      },
+                    ),
+                    SizedBox(height: 15),
+                    TextFormField(
+                      focusNode: myFocusNode2,
+                      autofocus: false,
+                      initialValue: snapshot.data.kullaniciSoyad,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(bottom: 3),
+                          labelText: "Soyisim"),
+                      onSaved: (girilenAd) {
+                        kullaniciSoyad = girilenAd;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    child: Text(
+                      "KAYDET",
+                      style: TextStyle(letterSpacing: 2, fontSize: 14),
+                    ),
+                    onPressed: () async {
+                      _formKey.currentState.save();
+                      kullaniciFotoUrl = await FirebaseStogareService()
+                          .profilResmiYukle(_image);
+                      FirebaseFirestoreService().cloudKullaniciGuncelle(
+                          kullaniciAd, kullaniciSoyad, kullaniciFotoUrl);
+                      myFocusNode.unfocus();
+                      myFocusNode2.unfocus();
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar2);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 25),
+              CustomCardWidget(
+                leading: Icon(
+                  Icons.lock_open_outlined,
+                ),
+                title: Text("Şifremi Değiştir"),
+                onpress: () => _resetPassword(),
+              ),
+              CustomCardWidget(
+                leading: Icon(
+                  Icons.help_center_outlined,
+                ),
+                title: Text("Yardım"),
+                onpress: () => _showDialog(),
+              ),
+              Card(
+                  child: SwitchListTile(
+                      title: Text("Karanlık Mod"),
+                      secondary: Icon(Icons.brightness_2),
+                      value: _appProvider.themeGet(),
+                      onChanged: (value) {
+                        setState(() {
+                          _appProvider.themeChange();
+                        });
+                      })),
+              CustomCardWidget(
+                leading: Icon(
+                  Icons.exit_to_app_outlined,
+                ),
+                title: Text("Çıkış Yap"),
+                onpress: () {
+                  _authProvider.cikisYap();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  buildAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kToolbarHeight * 0.85),
+      child: AppBar(
+        flexibleSpace: SafeArea(
+          child: TabBar(
+            onTap: (index) {
+              _tabController.index = index;
+            },
+            unselectedLabelColor: Colors.white,
+            labelColor: Colors.white,
+            tabs: [
+              Tab(
+                child: Text("PROFİL"),
+              ),
+              Tab(
+                child: Text("İLANLARIM"),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -248,7 +283,6 @@ class _ProfilState extends State<Profil> {
       } else {
         return FileImage(_image);
       }
-
     }
   }
 

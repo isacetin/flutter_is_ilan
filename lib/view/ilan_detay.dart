@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class IlanDetay extends StatelessWidget {
@@ -42,6 +44,7 @@ class IlanDetay extends StatelessWidget {
                   },
                 ),
               ),
+              Divider(),
               Card(
                 color: Colors.white,
                 child: Column(
@@ -73,16 +76,16 @@ class IlanDetay extends StatelessWidget {
                     ),
                     ListTile(
                       leading:
-                      Icon(Icons.location_on, color: Colors.blueAccent),
+                          Icon(Icons.location_on, color: Colors.blueAccent),
                       title: Text(product['isAdres']),
                     ),
                     ListTile(
                         leading:
-                        Icon(Icons.timer_sharp, color: Colors.blueAccent),
+                            Icon(Icons.timer_sharp, color: Colors.blueAccent),
                         title: Text(
                             product['isZaman'].toString().substring(0, 10)),
                         subtitle:
-                        Text(product['isZaman'].toString().substring(10)))
+                            Text(product['isZaman'].toString().substring(10)))
                   ],
                 ),
               )
@@ -93,6 +96,3 @@ class IlanDetay extends StatelessWidget {
     );
   }
 }
-
-
-/*                */

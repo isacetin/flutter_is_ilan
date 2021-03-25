@@ -32,9 +32,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
   DateTime suankiTarih = DateTime.now();
   DateTime sonTarih = DateTime(2023, 1, 1);
   String secilenTarih = " ";
-  double enlem = 0;
-  double boylam = 0;
-  bool autoKonum = true;
+
 
   @override
   void initState() {
@@ -273,4 +271,5 @@ class _IlanEklemeState extends State<IlanEkleme> {
     yayinlayanKullanici =
         await FirebaseFirestoreService().cloudKullaniciGetir();
   }
+
 }
