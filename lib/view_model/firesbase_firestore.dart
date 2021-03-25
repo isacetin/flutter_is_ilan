@@ -9,6 +9,7 @@ import '../model/ilan.dart';
 
 class FirebaseFirestoreService extends ChangeNotifier {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  DateTime ilanYayinTarihi = DateTime.now();
 
   Future<void> cloudkullaniciOlustur(User kullanici) async {
     await _firebaseFirestore.collection("kullanicilar").doc(kullanici.uid).set({
@@ -23,9 +24,7 @@ class FirebaseFirestoreService extends ChangeNotifier {
   Future<Kullanici> cloudKullaniciGetir() async {
     DocumentSnapshot doc = await _firebaseFirestore
         .collection("kullanicilar")
-        .doc(FirebaseAuthService()
-        .kullaniciTakip()
-        .uid)
+        .doc(FirebaseAuthService().kullaniciTakip().uid)
         .get();
     Kullanici kullanici;
     if (doc.exists) {
@@ -35,13 +34,11 @@ class FirebaseFirestoreService extends ChangeNotifier {
     return kullanici;
   }
 
-  Future<void> cloudKullaniciGuncelle(String kullaniciAd, String kullaniciSoyad,
-      String profilFotoUrl) async {
+  Future<void> cloudKullaniciGuncelle(
+      String kullaniciAd, String kullaniciSoyad, String profilFotoUrl) async {
     await _firebaseFirestore
         .collection("kullanicilar")
-        .doc(FirebaseAuthService()
-        .kullaniciTakip()
-        .uid)
+        .doc(FirebaseAuthService().kullaniciTakip().uid)
         .update({
       "kullaniciAd": kullaniciAd,
       "kullaniciSoyad": kullaniciSoyad,
@@ -58,6 +55,7 @@ class FirebaseFirestoreService extends ChangeNotifier {
         "isDetay": isIlan.isDetay,
         "isUcret": isIlan.isUcret,
         "isZaman": isIlan.isZaman,
+        "isYayinTarihi": ilanYayinTarihi,
         "yayilayanMail": isIlan.yayilayanMail,
         "yayinlayanFtoUrl": isIlan.yayinlayanFotoUrl
       }).then((value) => {print("İş Başarıyla Eklendi")});
@@ -70,7 +68,10 @@ class FirebaseFirestoreService extends ChangeNotifier {
   ilanGetir(String kategori) async {
     QuerySnapshot ilanlar;
     if (kategori == "Tümü") {
-      ilanlar = await _firebaseFirestore.collection("isler").get();
+      ilanlar = await _firebaseFirestore
+          .collection("isler")
+          .orderBy("isYayinTarihi", descending: true)
+          .get();
     } else {
       ilanlar = await _firebaseFirestore
           .collection("isler")
@@ -82,17 +83,22 @@ class FirebaseFirestoreService extends ChangeNotifier {
 
   profilSahibiIlanGetir() async {
     try {
-      QuerySnapshot ilanlar = await _firebaseFirestore.collection("isler").where(
-          'yayilayanMail', isEqualTo: FirebaseAuthService()
-          .kullaniciTakip()
-          .email).get();
+      QuerySnapshot ilanlar = await _firebaseFirestore
+          .collection("isler")
+          .where('yayilayanMail',
+              isEqualTo: FirebaseAuthService().kullaniciTakip().email)
+          .get();
       return ilanlar;
     } catch (e) {
-      print("Hata : " + e.toString());
+      print("profilSahibiIlanGetir Hata : " + e.toString());
     }
   }
 
-  ilanSil(String docId) async{
-    await _firebaseFirestore.collection("isler").doc(docId).delete();
+  ilanSil(String docId) async {
+    try{
+      await _firebaseFirestore.collection("isler").doc(docId).delete();
+    }catch(e){
+      print("İlan Silde Hata : " + e.toString());
+    }
   }
 }

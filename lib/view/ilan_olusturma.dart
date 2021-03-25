@@ -33,7 +33,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
   DateTime sonTarih = DateTime(2023, 1, 1);
   String secilenTarih = " ";
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -271,5 +270,4 @@ class _IlanEklemeState extends State<IlanEkleme> {
     yayinlayanKullanici =
         await FirebaseFirestoreService().cloudKullaniciGetir();
   }
-
 }

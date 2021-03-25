@@ -42,6 +42,7 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                     ),
                     title: Text(product['isAdi']),
                     subtitle: Text(product['isDetay']),
+                    trailing: Icon(Icons.arrow_back_ios),
                   ),
                 ),
                 secondaryActions: <Widget>[
@@ -55,6 +56,12 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                       });
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
+
+                  ),
+                  IconSlideAction(
+                    caption: 'Güncelle',
+                    color: Colors.green,
+                    icon: Icons.share,
                   ),
                   IconSlideAction(
                     caption: 'Paylaş',
