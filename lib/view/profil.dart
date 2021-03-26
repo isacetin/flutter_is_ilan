@@ -352,7 +352,7 @@ class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
           ),
           TextButton.icon(
             icon: Icon(Icons.clear),
-            label: Text('İPTAL!'),
+            label: Text('İPTAL'),
             onPressed: () {
               Navigator.of(context).pop();
             },

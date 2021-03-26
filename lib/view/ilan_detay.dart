@@ -3,8 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
 class IlanDetay extends StatelessWidget {

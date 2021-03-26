@@ -95,10 +95,24 @@ class FirebaseFirestoreService extends ChangeNotifier {
   }
 
   ilanSil(String docId) async {
-    try{
+    try {
       await _firebaseFirestore.collection("isler").doc(docId).delete();
-    }catch(e){
+    } catch (e) {
       print("İlan Silde Hata : " + e.toString());
+    }
+  }
+
+  ilanGuncelle(String docId, IsIlan isIlan) async {
+    try {
+      await _firebaseFirestore.collection("isler").doc(docId).update({
+        "isAdi": isIlan.isAdi,
+        "isAdres": isIlan.isAdres,
+        "isDetay": isIlan.isDetay,
+        "isUcret": isIlan.isUcret,
+        "isZaman": isIlan.isZaman,
+      }).then((value) => print("****Ilan Güncellendi****"));
+    } catch (e) {
+      print("Ilan Güncellemede Hata : $e");
     }
   }
 }

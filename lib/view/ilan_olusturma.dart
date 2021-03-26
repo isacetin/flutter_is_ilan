@@ -44,6 +44,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("İLAN YAYINLA"),
         elevation: 0,
         centerTitle: true,
       ),
@@ -160,7 +161,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
       ),
       Step(
         title: Text("İş"),
-        subtitle: Text("İş'in Detaylarını Giriniz"),
+        subtitle: Text("Detay Giriniz"),
         state: _stateleriAyarla(1),
         isActive: true,
         content: TextFormField(

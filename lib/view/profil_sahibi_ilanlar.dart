@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'ilan_guncelle.dart';
+
 class ProfilSahibiIlanlar extends StatefulWidget {
   @override
   _ProfilSahibiIlanlarState createState() => _ProfilSahibiIlanlarState();
@@ -40,9 +42,14 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                           : NetworkImage(product['yayinlayanFtoUrl']),
                       foregroundColor: Colors.white,
                     ),
-                    title: Text(product['isAdi']),
-                    subtitle: Text(product['isDetay']),
-                    trailing: Icon(Icons.arrow_back_ios),
+                    title: Text(product['isAdi'],
+                        style: TextStyle(color: Colors.black)),
+                    subtitle: Text(product['isDetay'],
+                        style: TextStyle(color: Colors.black)),
+                    trailing: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 secondaryActions: <Widget>[
@@ -56,12 +63,17 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                       });
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
-
                   ),
                   IconSlideAction(
                     caption: 'Güncelle',
                     color: Colors.green,
                     icon: Icons.share,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => IlanGuncelle(product: product,)));
+                    },
                   ),
                   IconSlideAction(
                     caption: 'Paylaş',

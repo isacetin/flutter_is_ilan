@@ -76,7 +76,7 @@ class IlanCard extends StatelessWidget {
                         Text(
                           isAdi,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                              fontWeight: FontWeight.bold, fontSize: 16,color: Colors.black),
                         ),
                         Text(
                           isDetay,
