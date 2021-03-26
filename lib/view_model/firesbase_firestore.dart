@@ -44,6 +44,13 @@ class FirebaseFirestoreService extends ChangeNotifier {
       "kullaniciSoyad": kullaniciSoyad,
       "fotoUrl": profilFotoUrl,
     });
+    var kullanici = await _firebaseFirestore.collection("isler").where("yayilayanMail", isEqualTo: FirebaseAuthService().kullaniciTakip().email).get();
+    kullanici.docs.forEach((element) async {
+      element.reference.update({
+        "yayinlayanFtoUrl" : profilFotoUrl,
+      });
+    });
+
   }
 
   // ignore: non_constant_identifier_names
