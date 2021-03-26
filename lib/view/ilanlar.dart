@@ -38,10 +38,7 @@ class _IlanlarState extends State<Ilanlar> {
             style: TextStyle(fontFamily: 'Roboto'),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Icon(Icons.search),
-            )
+
           ],
         ),
         body: RefreshIndicator(

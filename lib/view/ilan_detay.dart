@@ -4,16 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// ignore: must_be_immutable
 class IlanDetay extends StatelessWidget {
   // AIzaSyBzpmn8MvAVw6gnqlpBCc-2E15PfMBd1YU
   final String index;
   final DocumentSnapshot product;
-
   IlanDetay({Key key, this.index, this.product}) : super(key: key);
 
-  Completer<GoogleMapController> haritaKontrol = Completer();
-  var baslangicKonum =
+  final Completer<GoogleMapController> haritaKontrol = Completer();
+  final baslangicKonum =
       CameraPosition(target: LatLng(39.9035553, 32.6223371), zoom: 6);
 
   @override

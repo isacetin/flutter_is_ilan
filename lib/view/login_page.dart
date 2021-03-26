@@ -7,8 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _formKey = GlobalKey<FormState>();
-    var _authProvider =
-        Provider.of<FirebaseAuthService>(context, listen: false);
+    var _authProvider = Provider.of<FirebaseAuthService>(context, listen: false);
     String _email, _sifre;
     return Scaffold(
         body: ListView(

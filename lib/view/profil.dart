@@ -49,7 +49,6 @@ class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
     myFocusNode = FocusNode();
     myFocusNode2 = FocusNode();
   }
-
   @override
   void dispose() {
     _tabController.dispose();
@@ -140,37 +139,7 @@ class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
                 ),
               ),
               SizedBox(height: 35),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      focusNode: myFocusNode,
-                      autofocus: false,
-                      initialValue: snapshot.data.kullaniciAd,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 3),
-                        labelText: "İsim",
-                      ),
-                      onSaved: (girilenAd) {
-                        kullaniciAd = girilenAd;
-                      },
-                    ),
-                    SizedBox(height: 15),
-                    TextFormField(
-                      focusNode: myFocusNode2,
-                      autofocus: false,
-                      initialValue: snapshot.data.kullaniciSoyad,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(bottom: 3),
-                          labelText: "Soyisim"),
-                      onSaved: (girilenAd) {
-                        kullaniciSoyad = girilenAd;
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              profilForm(snapshot),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -231,6 +200,40 @@ class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
         );
       },
     );
+  }
+
+  Form profilForm(AsyncSnapshot<Kullanici> snapshot) {
+    return Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    focusNode: myFocusNode,
+                    autofocus: false,
+                    initialValue: snapshot.data.kullaniciAd,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(bottom: 3),
+                      labelText: "İsim",
+                    ),
+                    onSaved: (girilenAd) {
+                      kullaniciAd = girilenAd;
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  TextFormField(
+                    focusNode: myFocusNode2,
+                    autofocus: false,
+                    initialValue: snapshot.data.kullaniciSoyad,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                        labelText: "Soyisim"),
+                    onSaved: (girilenAd) {
+                      kullaniciSoyad = girilenAd;
+                    },
+                  ),
+                ],
+              ),
+            );
   }
 
   buildAppBar() {
@@ -305,19 +308,6 @@ class _ProfilState extends State<Profil> with SingleTickerProviderStateMixin {
             title: Text('@isacetinn'),
           ),
         ]);
-  }
-
-  Widget buildTextField(String labelTextt, String hintTextt) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35),
-      child: TextFormField(
-        initialValue: hintTextt,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(bottom: 3),
-          labelText: labelTextt,
-        ),
-      ),
-    );
   }
 
   _lauchEmail() async {

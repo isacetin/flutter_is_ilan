@@ -29,8 +29,8 @@ dependencies:
   image_picker: ^0.7.3
   flutter_svg: ^0.19.3
   url_launcher: ^6.0.2
+  date_time_picker: ^2.0.0
   flutter_multi_formatter: ^2.0.0
-  date_time_picker: "^2.0.0"
   cloud_firestore: ^1.0.1
   curved_navigation_bar: ^0.3.7
   provider: ^5.0.0

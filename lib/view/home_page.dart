@@ -13,13 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String onboardImage = 'assets/svg/welcome.svg';
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   Future<void> loadPictures() async {
     await precachePicture(
         ExactAssetPicture((SvgPicture.svgStringDecoder), onboardImage), null);

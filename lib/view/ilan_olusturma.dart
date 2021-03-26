@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
-
 import '../model/Kullanici.dart';
 import '../view_model/firesbase_firestore.dart';
 
@@ -36,7 +35,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     kullaniciGetir();
   }
