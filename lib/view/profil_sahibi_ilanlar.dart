@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:share/share.dart';
 
 import 'ilan_guncelle.dart';
 
@@ -72,13 +73,17 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => IlanGuncelle(product: product,)));
+                              builder: (context) =>
+                                  IlanGuncelle(product: product,)));
                     },
                   ),
                   IconSlideAction(
                     caption: 'Paylaş',
                     color: Colors.indigo,
                     icon: Icons.share,
+                    onTap: () {
+                      Share.share('https://play.google.com/store/apps/developer?id=%C4%B0sa+%C3%87etin');
+                    },
                   ),
                 ],
               );

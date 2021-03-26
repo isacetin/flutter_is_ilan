@@ -1,5 +1,6 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_is_ilan/model/ilan.dart';
 import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
@@ -133,7 +134,6 @@ class _IlanEklemeState extends State<IlanEkleme> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             });
             setState(() {
-              formKey.currentState.reset();
               aktifStep = 0;
               sonStepMi = false;
             });
@@ -165,6 +165,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
         state: _stateleriAyarla(1),
         isActive: true,
         content: TextFormField(
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(border: OutlineInputBorder()),
           maxLines: 3,
           onSaved: (girilenDeger) {
@@ -210,6 +211,7 @@ class _IlanEklemeState extends State<IlanEkleme> {
         state: _stateleriAyarla(3),
         isActive: true,
         content: TextFormField(
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(border: OutlineInputBorder()),
           onSaved: (girilenDeger) {
             adres = girilenDeger;
