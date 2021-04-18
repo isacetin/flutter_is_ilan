@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  dio: ^4.0.0
   share: ^2.0.1
   flutter_slidable: ^0.5.7
   google_maps_flutter: ^2.0.1

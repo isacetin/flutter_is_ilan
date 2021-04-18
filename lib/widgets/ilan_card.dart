@@ -56,38 +56,41 @@ class IlanCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Colors.white,
-                          backgroundImage: yayinlayanFotoUrl == null
-                              ? AssetImage("assets/images/profil.png")
-                              : NetworkImage(yayinlayanFotoUrl),
-                        ),
-                      ],
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.white,
+                      backgroundImage: yayinlayanFotoUrl == null
+                          ? AssetImage("assets/images/profil.png")
+                          : NetworkImage(yayinlayanFotoUrl),
                     ),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          isAdi,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16,color: Colors.black),
-                        ),
-                        Text(
-                          isDetay,
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                        ),
-                      ],
-                    )
                   ],
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isAdi,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        isDetay,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                      ),
+                    ],
+                  ),
                 ),
                 Chip(
                   backgroundColor: Color(0xFF9EDE73),

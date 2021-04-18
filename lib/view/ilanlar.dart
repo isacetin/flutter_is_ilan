@@ -24,6 +24,7 @@ class _IlanlarState extends State<Ilanlar> {
     "Diger"
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -83,7 +84,6 @@ class _IlanlarState extends State<Ilanlar> {
     return Expanded(
       flex: 9,
       child: ListView.builder(
-        physics: ClampingScrollPhysics(),
         itemCount: snapshot.data.docs.length,
         itemBuilder: (context, index) {
           DocumentSnapshot product = snapshot.data.docs[index];
