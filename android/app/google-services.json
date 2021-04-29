@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:599341728447:android:a5f2620da091987f713c0a",
+        "mobilesdk_app_id": "1:599341728447:android:35c07c6e77080134713c0a",
         "android_client_info": {
-          "package_name": "com.example.flutter_is_ilan"
+          "package_name": "com.isacetin.flutter_is_ilan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "599341728447-0jnkn4ia183janhdmoddcjivk8c5bu9j.apps.googleusercontent.com",
+          "client_id": "599341728447-ljkh97gss47eqbd5trnr2svbu3ngfd6k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.flutter_is_ilan",
+            "package_name": "com.isacetin.flutter_is_ilan",
             "certificate_hash": "dbaa6c712144be4a3f9cd752539dabd4a0dee4cb"
           }
         },

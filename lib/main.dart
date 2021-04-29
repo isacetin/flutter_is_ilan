@@ -9,8 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<FirebaseAuthService>(
-        create: (_) => FirebaseAuthService()),
+    ChangeNotifierProvider<FirebaseAuthService>(create: (_) => FirebaseAuthService()),
     ChangeNotifierProvider<AppController>(create: (_) => AppController()),
   ], child: MyApp()));
 }
@@ -24,7 +23,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+        title: 'HERMES',
         theme: context.watch<AppController>().themeGet() == true
             ? ThemeData.dark()
             : ThemeData(

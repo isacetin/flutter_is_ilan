@@ -23,7 +23,6 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      initialValue: "deneme@deneme.com",
                         decoration: InputDecoration(labelText: "E-mail"),
                         onSaved: (girilenDeger) {
                           _email = girilenDeger;
@@ -38,7 +37,6 @@ class LoginPage extends StatelessWidget {
                           }
                         }),
                     TextFormField(
-                      initialValue: "123456",
                       decoration: InputDecoration(labelText: "Şifre",),
                       onSaved: (girilenDeger) {
                         _sifre = girilenDeger;

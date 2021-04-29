@@ -4,6 +4,7 @@ import 'package:flutter_is_ilan/view_model/firesbase_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share/share.dart';
 
+import 'ilan_detay.dart';
 import 'ilan_guncelle.dart';
 
 class ProfilSahibiIlanlar extends StatefulWidget {
@@ -51,6 +52,17 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                       Icons.arrow_back_ios,
                       color: Colors.black,
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => IlanDetay(
+                            index: index.toString(),
+                            product: product,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
                 secondaryActions: <Widget>[
@@ -73,8 +85,9 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  IlanGuncelle(product: product,)));
+                              builder: (context) => IlanGuncelle(
+                                    product: product,
+                                  )));
                     },
                   ),
                   IconSlideAction(
@@ -82,7 +95,8 @@ class _ProfilSahibiIlanlarState extends State<ProfilSahibiIlanlar> {
                     color: Colors.indigo,
                     icon: Icons.share,
                     onTap: () {
-                      Share.share('https://play.google.com/store/apps/developer?id=%C4%B0sa+%C3%87etin');
+                      Share.share(
+                          'https://play.google.com/store/apps/developer?id=%C4%B0sa+%C3%87etin');
                     },
                   ),
                 ],
